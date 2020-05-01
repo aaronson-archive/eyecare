@@ -1,9 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:layout_margin="36dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="#444b54"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="01" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="#444b54"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="안녕하세요!\n가입을 진행하겠습니다." />
+
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:textSize="12sp"
+                android:hint="이름을 입력해주세요"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:textColorHint="#c8c8c8"
+                android:paddingBottom="16dp"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:inputType="phone"
+                android:textSize="12sp"
+                android:hint="전화번호를 입력$해주세요"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:textColor="#444b54"
+                android:textColorHint="#c8c8c8"
+                android:paddingBottom="16dp"
+                android:text="" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/email"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:inputType="textEmailAddress"
+                android:textSize="12sp"
+                android:hint="이메일을 입력해주세요"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:textColorHint="#c8c8c8"
+                android:textColor="#444b54"
+                android:paddingBottom="16dp"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:inputType="number"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:hint="자녀의 나이를 입력해주세요"
+                android:textColorHint="#c8c8c8"
+                android:textColor="#444b54"
+                android:paddingBottom="16dp"
+                android:text="" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#c8c8c8"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="자녀의 성별을 선택해주세요." />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:minHeight="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:background="@drawable/button"
+                        android:id="@+id/man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/spoqa_han_sans_bold"
+                        android:text="남성" />
+
+                    <Button
+                        android:background="@drawable/button"
+                        android:id="@+id/girl"
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/spoqa_han_sans_bold"
+                        android:text="여성" />
+
+                </LinearLayout>
+
+                <Button
+                    android:background="@drawable/button"
+                    android:layout_marginTop="36dp"
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/spoqa_han_sans_bold"
+                    android:text="다음" />
+
+</LinearLayout>
