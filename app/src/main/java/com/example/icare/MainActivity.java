@@ -3,6 +3,7 @@ package com.example.icare;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,18 +19,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText name, phone, email, age;
     Button man, girl, next;
-    String sex;
+    boolean canNext = false;
+    String sex = "";
 
-    public static boolean isValidEmail(String email) {
-        boolean err = false;
-        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(email);
-        if(m.matches()) {
-            err = true;
-        }
-        return err;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(s == name.getEditableText()){
-                    Log.e("NAME", String.valueOf(s.length()));
-                }else if(s == phone.getEditableText()){
-                    Log.e("PHONE", String.valueOf(s.length()));
-                }else if(s == girl.getEditableText()){
-                    Log.e("GIRL", String.valueOf(s.length()));
-                }else if(s == age.getEditableText()){
-                    Log.e("AGE", String.valueOf(s.length()));
-                }
-
-                if (name.length() > 0 && phone.length() > 0 && girl.length() > 0 && age.length() > 0) {
+                if (name.length() > 0 && phone.length() > 0 && girl.length() > 0 && age.length() > 0 && sex != "") {
                     next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                    canNext = true;
                 } else {
                     next.setBackground(getResources().getDrawable(R.drawable.button));
+                    canNext = false;
                 }
 
             }
@@ -98,14 +82,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 man.setBackground(getResources().getDrawable(R.drawable.button_actvie));
                 girl.setBackground(getResources().getDrawable(R.drawable.button));
                 sex = "man";
+                if (name.length() > 0 && phone.length() > 0 && girl.length() > 0 && age.length() > 0 && sex != "") {
+                    next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                    canNext = true;
+                } else {
+                    next.setBackground(getResources().getDrawable(R.drawable.button));
+                    canNext = false;
+                }
                 break;
             case R.id.girl :
                 man.setBackground(getResources().getDrawable(R.drawable.button));
                 girl.setBackground(getResources().getDrawable(R.drawable.button_actvie));
                 sex = "girl";
+                if (name.length() > 0 && phone.length() > 0 && girl.length() > 0 && age.length() > 0 && sex != "") {
+                    next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                    canNext = true;
+                } else {
+                    next.setBackground(getResources().getDrawable(R.drawable.button));
+                    canNext = false;
+                }
                 break;
             case R.id.next :
-
+                if (canNext && sex != "") {
+                    startActivity(new Intent(getApplicationContext(), SecureActivity.class));
+                    finish();
+                }
                 break;
         }
     }

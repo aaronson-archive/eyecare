@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="36dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#444b54"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="02" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#444b54"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="안녕하세요!\n설정을 진행하겠습니다." />
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#c8c8c8"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="보안 설정을 선택해주세." />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minHeight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:background="@drawable/button"
+            android:id="@+id/finger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="지문인식" />
+
+        <Button
+            android:background="@drawable/button"
+            android:id="@+id/password"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="비밀번호" />
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:layout_height="match_parent">
+
+        <Button
+        android:background="@drawable/button"
+        android:layout_marginTop="36dp"
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="다음" />
+
+    </RelativeLayout>
+
+</LinearLayout>
