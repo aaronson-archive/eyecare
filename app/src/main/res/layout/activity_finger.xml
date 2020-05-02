@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="36dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#444b54"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="03" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#444b54"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="안녕하세요!\n지문을 등록하겠습니다." />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_marginTop="70dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/finger" />
+
+        <TextView
+            android:id="@+id/finger_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사용하실 지문을 센서 위에 올려주세요."
+            android:gravity="center"
+            android:textColor="#c8c8c8"
+            android:textSize="12sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_actvie"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="지문 인식하기"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="다음"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</LinearLayout>

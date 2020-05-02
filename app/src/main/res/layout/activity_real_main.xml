@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="36dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#444b54"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="버튼을 눌러주세요,\n모니터링을 시작합니다." />
+
+
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="13.5dp"
+            app:srcCompat="@drawable/plz" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_height="wrap_content"
+            android:textColor="#444b54"
+            android:layout_weight="5"
+            android:layout_margin="13.5dp"
+            android:text="앱을 완전히 종료하지 않으면\n계속 모니터링이 진행됩니다." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="13.5dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/brightness" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_height="wrap_content"
+            android:textColor="#444b54"
+            android:layout_weight="2"
+            android:layout_margin="13.5dp"
+            android:text="설정된 거리에서 가까워지면\n자동으로 화면 밝기가 감소됩니다." />
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/button_actvie"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="모니터링 시작"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/button_actvie"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="환경설정"
+                android:textColor="#fff" />
+        </LinearLayout>
+
+
+</LinearLayout>

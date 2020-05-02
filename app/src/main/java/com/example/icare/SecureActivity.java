@@ -24,6 +24,7 @@ import android.widget.Button;
 
         finger.setOnClickListener(this);
         password.setOnClickListener(this);
+        next.setOnClickListener(this);
     }
 
      @SuppressLint("ResourceAsColor")
@@ -44,8 +45,11 @@ import android.widget.Button;
                  authType = "password";
                  break;
              case R.id.next :
-                 if (authType != "") {
-                     startActivity(new Intent(getApplicationContext(), SecureActivity.class));
+                 if (authType == "password") {
+                     startActivity(new Intent(getApplicationContext(), PasswordActivity.class));
+                     finish();
+                 } else if (authType == "finger") {
+                     startActivity(new Intent(getApplicationContext(), FingerActivity.class));
                      finish();
                  }
                  break;
