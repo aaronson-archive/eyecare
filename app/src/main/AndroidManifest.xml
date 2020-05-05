@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.icare">
 
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CompleteActivity"></activity>
+        <activity android:name=".ConfigureActivity"></activity>
+        <activity android:name=".CompleteActivity" />
         <activity android:name=".RealMainActivity" />
         <activity android:name=".PasswordActivity" />
         <activity android:name=".FingerActivity" />
@@ -24,6 +27,5 @@
         </activity>
         <activity android:name=".MainActivity" />
     </application>
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
 </manifest>

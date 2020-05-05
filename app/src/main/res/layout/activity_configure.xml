@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="36dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#61000000"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="환경설정" />
+
+    <LinearLayout
+        android:layout_marginTop="28dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/moniter"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#de000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="모니터링 거리 지정" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#61000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="얼굴과 핸드폰 사이에 거리를 지정합니다." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/alram"
+        android:layout_marginTop="28dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#de000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="알람 종류 선택" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#61000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="지정된 거리보다 가까울 시 알림 방법을 선택합니다" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/birghtness"
+        android:layout_marginTop="28dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#de000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="화면 밝기 지정" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#61000000"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:text="얼굴과 핸드폰 사이에 거리를 지정합니다." />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:layout_height="match_parent">
+
+        <Button
+            android:background="@drawable/button_actvie"
+            android:layout_marginTop="36dp"
+            android:id="@+id/prev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="돌아가기" />
+
+    </RelativeLayout>
+
+</LinearLayout>
