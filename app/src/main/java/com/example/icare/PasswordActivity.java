@@ -1,7 +1,9 @@
 package com.example.icare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -11,16 +13,28 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class PasswordActivity extends AppCompatActivity {
 
+    private SharedPreferences mPref;
+    private SharedPreferences.Editor editor;
     private Button next;
     private EditText pwd, repwd;
     private boolean canNext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = mPref.edit();
 
         pwd = (EditText) findViewById(R.id.pwd);
         repwd = (EditText) findViewById(R.id.repwd);
@@ -63,12 +77,12 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (canNext) {
+                    editor.putString("password",pwd.getText().toString());
+                    editor.commit();
                     startActivity(new Intent(getApplicationContext(), CompleteActivity.class));
                     finish();
                 }
-
             }
         });
-
     }
 }

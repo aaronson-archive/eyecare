@@ -2,10 +2,11 @@ package com.example.icare;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,18 +15,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private SharedPreferences mPref;
+    private SharedPreferences.Editor editor;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
     private Matcher matcher;
     private EditText name, phone, email, age;
     private Button man, girl, next;
@@ -39,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = mPref.edit();
+
         mAuth = FirebaseAuth.getInstance();
 
         name = (EditText) findViewById(R.id.name);
@@ -119,8 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (isEmail) {
                     if (canNext && sex != "") {
-                        String key = mDatabase.push().getKey();
-                        mDatabase.child(key).setValue(firebaseMap());
+                        editor.putString("email", email.getText().toString());
+                        editor.putString("name", name.getText().toString());
+                        editor.putString("age", age.getText().toString());
+                        editor.putString("phone", phone.getText().toString());
+                        editor.putString("sex", sex);
+                        editor.commit();
+
                         startActivity(new Intent(getApplicationContext(), SecureActivity.class));
                         finish();
                     }
@@ -141,16 +146,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-    private Map<String, Object> firebaseMap() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("email", email.getText().toString());
-        map.put("name", name.getText().toString());
-        map.put("age", age.getText().toString());
-        map.put("phone", phone.getText().toString());
-        map.put("sex", sex);
-
-        return map;
     }
 }
