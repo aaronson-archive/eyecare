@@ -39,7 +39,7 @@ public class FingerActivity extends AppCompatActivity {
             case BiometricManager.BIOMETRIC_SUCCESS:
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                fingerText.setText("지문인식 센서가 앖습니다. 앱을 종료해주세요.");
+                fingerText.setText("지문인식 센서가 없습니다. 앱을 종료해주세요.");
                 fingerText.setTextColor(Color.parseColor("#c04444"));
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:

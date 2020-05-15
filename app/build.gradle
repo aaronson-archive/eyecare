@@ -34,5 +34,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.biometric:biometric:1.0.1'
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
-    compile 'com.avast:android-styled-dialogs:2.3.3'
+    implementation 'com.avast:android-styled-dialogs:2.3.3'
+    implementation 'com.google.firebase:firebase-database:19.3.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
 }

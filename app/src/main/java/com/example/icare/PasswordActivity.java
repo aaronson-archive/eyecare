@@ -1,30 +1,31 @@
 package com.example.icare;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class PasswordActivity extends AppCompatActivity {
 
-    Button next;
-    EditText pwd, repwd;
-    boolean canNext;
+    private Button next;
+    private EditText pwd, repwd;
+    private boolean canNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
-        pwd = (EditText)findViewById(R.id.pwd);
-        repwd = (EditText)findViewById(R.id.repwd);
+        pwd = (EditText) findViewById(R.id.pwd);
+        repwd = (EditText) findViewById(R.id.repwd);
 
-        next = (Button)findViewById(R.id.next);
+        next = (Button) findViewById(R.id.next);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -39,15 +40,18 @@ public class PasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                String pwdStr = pwd.getText().toString();
+                String repwdStr = repwd.getText().toString();
 
-                if (pwd.getText() == repwd.getText() ) {
-                    next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
-                    canNext = true;
+                if (pwdStr.equals(repwdStr)) {
+                    if (pwdStr.length() >= 6) {
+                        next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                        canNext = true;
+                    }
                 } else {
                     next.setBackground(getResources().getDrawable(R.drawable.button));
                     canNext = false;
                 }
-
             }
 
         };

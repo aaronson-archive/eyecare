@@ -1,4 +1,4 @@
- package com.example.icare;
+package com.example.icare;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
- public class SecureActivity extends AppCompatActivity implements View.OnClickListener {
+public class SecureActivity extends AppCompatActivity implements View.OnClickListener {
 
-     Button finger, password, next;
-     String authType = "";
+    Button finger, password, next;
+    String authType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,32 +27,32 @@ import android.widget.Button;
         next.setOnClickListener(this);
     }
 
-     @SuppressLint("ResourceAsColor")
-     @Override
-     public void onClick(View v) {
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void onClick(View v) {
 
-         switch (v.getId()){
-             case R.id.finger :
-                 finger.setBackground(getResources().getDrawable(R.drawable.button_actvie));
-                 password.setBackground(getResources().getDrawable(R.drawable.button));
-                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
-                 authType = "finger";
-                 break;
-             case R.id.password :
-                 finger.setBackground(getResources().getDrawable(R.drawable.button));
-                 password.setBackground(getResources().getDrawable(R.drawable.button_actvie));
-                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
-                 authType = "password";
-                 break;
-             case R.id.next :
-                 if (authType == "password") {
-                     startActivity(new Intent(getApplicationContext(), PasswordActivity.class));
-                     finish();
-                 } else if (authType == "finger") {
-                     startActivity(new Intent(getApplicationContext(), FingerActivity.class));
-                     finish();
-                 }
-                 break;
-         }
-     }
+        switch (v.getId()){
+            case R.id.finger :
+                finger.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                password.setBackground(getResources().getDrawable(R.drawable.button));
+                next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                authType = "finger";
+                break;
+            case R.id.password :
+                finger.setBackground(getResources().getDrawable(R.drawable.button));
+                password.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+                authType = "password";
+                break;
+            case R.id.next :
+                if (authType == "password") {
+                    startActivity(new Intent(getApplicationContext(), PasswordActivity.class));
+                    finish();
+                } else if (authType == "finger") {
+                    startActivity(new Intent(getApplicationContext(), FingerActivity.class));
+                    finish();
+                }
+                break;
+        }
+    }
 }
