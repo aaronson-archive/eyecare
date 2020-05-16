@@ -119,14 +119,23 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:background="@drawable/button"
-                    android:layout_marginTop="36dp"
-                    android:id="@+id/next"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:fontFamily="@font/spoqa_han_sans_bold"
-                    android:text="다음" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:text="다음"
+            android:textColor="#fff" />
+    </LinearLayout>
+
 
 </LinearLayout>

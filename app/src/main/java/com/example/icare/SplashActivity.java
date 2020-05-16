@@ -28,10 +28,11 @@ public class SplashActivity extends AppCompatActivity {
 
             boolean callValue = mPref.getBoolean("isFrist", false);
             if (callValue) {
-                startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
                 finish();
             } else if(!isFinishing()) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         }

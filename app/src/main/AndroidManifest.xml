@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConfigureActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".ConfigureActivity" />
         <activity android:name=".CompleteActivity" />
         <activity android:name=".RealMainActivity" />
         <activity android:name=".PasswordActivity" />
