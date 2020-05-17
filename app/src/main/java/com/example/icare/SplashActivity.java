@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
 
             boolean callValue = mPref.getBoolean("isFrist", false);
             boolean isAuto = mPref.getBoolean("autoLogin", false);
-            if (callValue) {
+            if (!callValue) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else if (isAuto) {
