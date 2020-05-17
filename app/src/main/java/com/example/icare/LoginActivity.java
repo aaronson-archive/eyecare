@@ -8,14 +8,19 @@ import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
@@ -25,11 +30,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     Button finger, password, next;
     EditText pwd, name, email;
+    CheckBox autoLogin;
     private Matcher matcher;
     private String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     boolean canNext = false;
     String authType = "";
+    private SharedPreferences mPref;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +50,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         pwd = (EditText)findViewById(R.id.pwd);
         name = (EditText)findViewById(R.id.name);
         email = (EditText)findViewById(R.id.email);
+        autoLogin = (CheckBox)findViewById(R.id.autoLogin);
 
         finger.setOnClickListener(this);
         password.setOnClickListener(this);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -136,6 +147,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+
+
+    }
+
+    public void loginComplete () {
+
+        SharedPreferences.Editor editor = mPref.edit();
+
+        if (autoLogin.isChecked()) {
+            editor.putBoolean("autoLogin", true);
+            editor.commit();
+        }
+
+
     }
 
 

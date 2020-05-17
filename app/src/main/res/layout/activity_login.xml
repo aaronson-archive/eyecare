@@ -110,6 +110,24 @@
             android:paddingBottom="16dp"
             android:text="" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:id="@+id/autoLogin"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="자동 로그인">
+
+            </TextView>
+        </LinearLayout>
+
         <Button
             android:id="@+id/next"
             android:layout_width="match_parent"

@@ -41,7 +41,7 @@ public class CompleteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String key = mDatabase.push().getKey();
                 mDatabase.child(key).setValue(firebaseMap());
-                startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         });
