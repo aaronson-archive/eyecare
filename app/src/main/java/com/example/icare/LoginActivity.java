@@ -1,17 +1,7 @@
 package com.example.icare;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
-import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,12 +12,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.Executor;
@@ -53,13 +47,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        finger = (Button)findViewById(R.id.finger);
-        password = (Button)findViewById(R.id.password);
-        next = (Button)findViewById(R.id.next);
-        pwd = (EditText)findViewById(R.id.pwd);
-        name = (EditText)findViewById(R.id.name);
-        email = (EditText)findViewById(R.id.email);
-        autoLogin = (CheckBox)findViewById(R.id.autoLogin);
+        finger = (Button) findViewById(R.id.finger);
+        password = (Button) findViewById(R.id.password);
+        next = (Button) findViewById(R.id.next);
+        pwd = (EditText) findViewById(R.id.pwd);
+        name = (EditText) findViewById(R.id.name);
+        email = (EditText) findViewById(R.id.email);
+        autoLogin = (CheckBox) findViewById(R.id.autoLogin);
 
         finger.setOnClickListener(this);
         password.setOnClickListener(this);
@@ -95,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         email.addTextChangedListener(textWatcher);
 
         final BiometricManager biometricManager = BiometricManager.from(this);
-        switch (biometricManager.canAuthenticate()){
+        switch (biometricManager.canAuthenticate()) {
             case BiometricManager.BIOMETRIC_SUCCESS:
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
@@ -149,25 +143,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             biometricPrompt.authenticate(promptInfo);
                             break;
                         case "password":
-                            Toast.makeText(getApplicationContext(), "비밀번호.", Toast.LENGTH_SHORT).show();
-                            mDatabase.orderByChild("email").equalTo("adsf@asd.asd").addListenerForSingleValueEvent(new ValueEventListener() {
+                            mDatabase.orderByChild("email").equalTo(email.getText().toString()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    DataValue = String.valueOf(dataSnapshot.getValue());
-                                    String reg = ".*password=" + password.getText() + ".*";
-                                    if ( DataValue.matches(reg) ) {
-                                        Log.i("INFO", DataValue);
+                                    User user = dataSnapshot.getValue(User.class);
+                                    Log.i("INFOO", user.password);
+                                    if (user.equals(password.getText().toString())) {
+                                        Log.i("INFO", user.password);
+                                    } else {
+                                        Log.i("INFX", user.password);
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                    Log.e("onCancelled", databaseError.getMessage());
                                 }
                             });
-
-
-
                             break;
                     }
                 }
@@ -188,7 +180,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //
 //
 //    };
-
 
 
     @SuppressLint("ResourceAsColor")

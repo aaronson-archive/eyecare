@@ -106,17 +106,17 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
             case 11:
                 moniterIdx = number;
                 editor.putInt("moniterIdx", number);
-                // 추가 처리
+                editor.putString("moniter", value.toString());
                 break;
             case 12:
                 alramIdx = number;
                 editor.putInt("alramIdx", number);
-                // 추가 처리
+                editor.putString("alram", value.toString());
                 break;
             case 13:
                 brightnessIdx = number;
                 editor.putInt("brightnessIdx", number);
-                // 추가 처리
+                editor.putString("brightness", value.toString());
                 break;
         }
         editor.commit();
