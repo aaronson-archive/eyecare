@@ -7,10 +7,13 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,15 +21,15 @@ import java.util.Map;
 public class CompleteActivity extends AppCompatActivity {
 
     private Button next;
-    private DatabaseReference mDatabase;
     private SharedPreferences mPref;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        db  = FirebaseFirestore.getInstance();
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -39,8 +42,18 @@ public class CompleteActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String key = mDatabase.push().getKey();
-                mDatabase.child(key).setValue(firebaseMap());
+                db.collection("users").document(mPref.getString("email","")).set(firebaseMap())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }

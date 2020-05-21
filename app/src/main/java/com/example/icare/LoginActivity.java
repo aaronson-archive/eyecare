@@ -1,8 +1,10 @@
 package com.example.icare;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,11 +20,11 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
@@ -30,17 +32,16 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button finger, password, next;
-    EditText pwd, name, email;
-    CheckBox autoLogin;
+    private Button finger, password, next;
+    private EditText pwd, name, email;
+    private CheckBox autoLogin;
     private Matcher matcher;
     private String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     boolean canNext = false;
-    String authType = "";
+    private String authType = "";
     private SharedPreferences mPref;
-    private DatabaseReference mDatabase;
-    String DataValue = "";
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         finger.setOnClickListener(this);
         password.setOnClickListener(this);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        db = FirebaseFirestore.getInstance();
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -143,21 +145,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             biometricPrompt.authenticate(promptInfo);
                             break;
                         case "password":
-                            mDatabase.orderByChild("email").equalTo(email.getText().toString()).addValueEventListener(new ValueEventListener() {
+                            db.collection("users").document(email.getText().toString()).get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                User user = task.getResult().toObject(User.class);
+                                                if (user.password.equals(pwd.getText().toString())) {
+                                                    loginComplete();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                                    Log.d("Password", user.password + "/" + pwd.getText().toString());
+                                                }
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    User user = dataSnapshot.getValue(User.class);
-                                    Log.i("INFOO", user.password);
-                                    if (user.equals(password.getText().toString())) {
-                                        Log.i("INFO", user.password);
-                                    } else {
-                                        Log.i("INFX", user.password);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Log.e("onCancelled", databaseError.getMessage());
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             break;
@@ -169,18 +174,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    void loginComplete() {
-//
-//        SharedPreferences.Editor editor = mPref.edit();
-//
-//        if (autoLogin.isChecked()) {
-//            editor.putBoolean("autoLogin", true);
-//            editor.commit();
-//        }
-//
-//
-//    };
+    void loginComplete() {
+        SharedPreferences.Editor editor = mPref.edit();
 
+        if (autoLogin.isChecked()) {
+            editor.putBoolean("autoLogin", true);
+            editor.commit();
+        }
+
+        startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+        finish();
+    }
 
     @SuppressLint("ResourceAsColor")
     @Override
