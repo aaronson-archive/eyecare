@@ -66,8 +66,6 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
 
         start.setText(mPref.getString("status", "모니터링 시작"));
 
-        Log.d("mBrightness", mBrightness + "");
-
         setting.setOnClickListener(this);
         start.setOnClickListener(this);
 
@@ -78,16 +76,6 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
             case R.id.start:
                 switch (start.getText().toString()) {
                     case "모니터링 시작":
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                       /* Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                        homeIntent.addCategory(Intent.CATEGORY_HOME);
-                        homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(homeIntent);*/
-                            }
-                        }, SPLASH_TIME_OUT);
-
                         context = getApplicationContext();
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
@@ -165,7 +153,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         cameraSource = new CameraSource.Builder(this, detector)
                 .setRequestedPreviewSize(1024, 768)
                 .setFacing(CameraSource.CAMERA_FACING_FRONT)
-                .setRequestedFps(30.0f)
+                .setRequestedFps(50.0f)
                 .build();
 
         try {
@@ -202,7 +190,6 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
             int moniter = Integer.parseInt(mPref.getString("moniter", "15cm").replaceAll("cm", "")) * 10;
             final float brightness = Float.parseFloat("0." + mPref.getString("brightness", "50%").replace("%", ""));
 
-
             if (d < moniter) {
                 switch (alram) {
                     case "밝기줄이기":
@@ -218,14 +205,18 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                         }
                         break;
                     case "알림띄우기":
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "휴대전화와의 거리가 너무 가깝습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
                         try {
-                            Looper.prepare();
-                            Toast.makeText(getApplicationContext(), d + "mm", Toast.LENGTH_LONG).show();
-                            Thread.sleep(1000);
-                            Looper.loop();
+                            Thread.sleep(5000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+
                         break;
                 }
             }
@@ -264,6 +255,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         editor.putString("status", "모니터링 시작");
+        editor.putBoolean("alert", true);
         editor.commit();
     }
 }
