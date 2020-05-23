@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,12 +41,23 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
     float sensorX, sensorY; //camera sensor dimensions
     float angleX, angleY;
     private CameraSource cameraSource;
-
+    private WindowManager.LayoutParams params;
+    private float mBrightness;
+    private int pBrightness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
+        params = getWindow().getAttributes();
+        mBrightness = params.screenBrightness;
+
+        try {
+            pBrightness = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
         mPref = mPref = PreferenceManager.getDefaultSharedPreferences(this);
         editor = mPref.edit();
 
@@ -53,8 +66,11 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
 
         start.setText(mPref.getString("status", "모니터링 시작"));
 
+        Log.d("mBrightness", mBrightness + "");
+
         setting.setOnClickListener(this);
         start.setOnClickListener(this);
+
     }
 
     public void onClick(View v) {
@@ -98,6 +114,9 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getApplicationContext(), "모니터링을 종료합니다.", Toast.LENGTH_SHORT).show();
                         start.setText(mPref.getString("stauts", "모니터링 시작"));
                         editor.putString("status", "모니터링 시작");
+                        params.screenBrightness = mBrightness;
+                        getWindow().setAttributes(params);
+                        Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
                         break;
                 }
                 editor.commit();
@@ -179,14 +198,53 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
             float d = F * (H / sensorX) * (768 / (2 * p));
             Log.e("Distance", String.format("%.0f", d));
 
-            if (d < 100) {
-                try {
-                    Looper.prepare();
-                    Toast.makeText(getApplicationContext(), d + "mm", Toast.LENGTH_LONG).show();
-                    Thread.sleep(1000);
-                    Looper.loop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            String alram = mPref.getString("alram", "밝기줄이기");
+            int moniter = Integer.parseInt(mPref.getString("moniter", "15cm").replaceAll("cm", "")) * 10;
+            final float brightness = Float.parseFloat("0." + mPref.getString("brightness", "50%").replace("%", ""));
+
+
+            if (d < moniter) {
+                switch (alram) {
+                    case "밝기줄이기":
+                        if (params.screenBrightness != brightness) {
+                            RealMainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    params.screenBrightness = brightness;
+                                    getWindow().setAttributes(params);
+                                    Settings.System.putInt(getContentResolver(), "screen_brightness", (int) (brightness * 255));
+                                }
+                            });
+                        }
+                        break;
+                    case "알림띄우기":
+                        try {
+                            Looper.prepare();
+                            Toast.makeText(getApplicationContext(), d + "mm", Toast.LENGTH_LONG).show();
+                            Thread.sleep(1000);
+                            Looper.loop();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
+            if (d >= moniter) {
+                if (alram.equals("밝기줄이기")) {
+                    try {
+                        if (Settings.System.getInt(getContentResolver(), "screen_brightness") < pBrightness) {
+                            RealMainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    params.screenBrightness = mBrightness;
+                                    getWindow().setAttributes(params);
+                                    android.provider.Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
+                                }
+                            });
+                        }
+                    } catch (Settings.SettingNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
