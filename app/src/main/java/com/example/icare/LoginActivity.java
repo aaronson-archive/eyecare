@@ -114,7 +114,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(), "지문인식 성공", Toast.LENGTH_SHORT).show();
-                // 여기에 DB에서 검색 후 스크린 이동
+                db.collection("users").document(email.getText().toString()).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    User user = task.getResult().toObject(User.class);
+                                    if (user.name.equals(name.getText().toString())) {
+                                        loginComplete();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
             }
 

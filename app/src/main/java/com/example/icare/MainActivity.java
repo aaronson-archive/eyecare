@@ -130,21 +130,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         editor.putString("sex", sex);
                         editor.commit();
 
-                        db.collection("users").document(email.getText().toString()).get()
-                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if(task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "이미 존재하는 이메일입니다..", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                startActivity(new Intent(getApplicationContext(), SecureActivity.class));
-                                finish();
-                            }
-                        });
+                       try {
+                           db.collection("users").document(email.getText().toString()).get()
+                                   .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                       @Override
+                                       public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                           if(task.isSuccessful()) {
+                                               Toast.makeText(getApplicationContext(), "이미 존재하는 이메일입니다..", Toast.LENGTH_SHORT).show();
+                                           }
+                                       }
+                                   }).addOnFailureListener(new OnFailureListener() {
+                               @Override
+                               public void onFailure(@NonNull Exception e) {
+
+                               }
+                           });
+                       } catch (NullPointerException e) {
+                           startActivity(new Intent(getApplicationContext(), SecureActivity.class));
+                           finish();
+                       }
                     }
                     break;
                 } else {
