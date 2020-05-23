@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     loginComplete();
                                                 } else {
                                                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                                    Log.d("Password", user.password + "/" + pwd.getText().toString());
                                                 }
                                             }
                                         }

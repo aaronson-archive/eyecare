@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SharedPreferences mPref;
     private SharedPreferences.Editor editor;
-    private FirebaseAuth mAuth;
     private Matcher matcher;
     private EditText name, phone, email, age;
     private Button man, girl, next;
@@ -47,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
         editor = mPref.edit();
-
-        mAuth = FirebaseAuth.getInstance();
 
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
