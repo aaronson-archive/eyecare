@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -162,8 +163,6 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private class FaceTracker extends Tracker<Face> {
-
-
         private FaceTracker() {
 
         }
@@ -180,7 +179,16 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
             float d = F * (H / sensorX) * (768 / (2 * p));
             Log.e("Distance", String.format("%.0f", d));
 
-
+            if (d < 100) {
+                try {
+                    Looper.prepare();
+                    Toast.makeText(getApplicationContext(), d + "mm", Toast.LENGTH_LONG).show();
+                    Thread.sleep(1000);
+                    Looper.loop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
@@ -194,4 +202,10 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        editor.putString("status", "모니터링 시작");
+        editor.commit();
+    }
 }
