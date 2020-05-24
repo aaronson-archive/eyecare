@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -171,10 +170,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 User user = task.getResult().toObject(User.class);
-                                                if (user.password.equals(pwd.getText().toString())) {
-                                                    loginComplete();
+                                                if (user != null) {
+                                                    if (user.password.equals(pwd.getText().toString())) {
+                                                        loginComplete();
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 } else {
-                                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         }
