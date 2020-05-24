@@ -1,9 +1,5 @@
 package com.example.icare;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,8 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -28,25 +24,12 @@ public class SplashActivity extends AppCompatActivity {
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("권한 설정")
-                    .setMessage("앱을 사용하기 위해서는 권한이 필요합니다.\n수락하시겠습니까?")
-                    .setPositiveButton("수락", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!Settings.System.canWrite(SplashActivity.this)) {
-                                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                                intent.setData(Uri.parse("package:" +SplashActivity.this.getPackageName()));
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        }
-                    }).setNegativeButton("거절", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
+            if (!Settings.System.canWrite(SplashActivity.this)) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + SplashActivity.this.getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
 
     }
@@ -62,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else if (isAuto) {
                 startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
-            } else if(!isFinishing()) {
+            } else if (!isFinishing()) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }

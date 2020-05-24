@@ -79,7 +79,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                         context = getApplicationContext();
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-                            Toast.makeText(this, "Grant Permission and restart app", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "앱을 사용하기 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             Camera camera = frontCam();
                             Camera.Parameters campar = camera.getParameters();
@@ -91,11 +91,10 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                             camera.stopPreview();
                             camera.release();
                             createCameraSource();
-
+                            Toast.makeText(getApplicationContext(), "모니터링을 시작합니다.", Toast.LENGTH_SHORT).show();
+                            start.setText(mPref.getString("stauts", "모니터링 종료"));
+                            editor.putString("status", "모니터링 종료");
                         }
-                        Toast.makeText(getApplicationContext(), "모니터링을 시작합니다.", Toast.LENGTH_SHORT).show();
-                        start.setText(mPref.getString("stauts", "모니터링 종료"));
-                        editor.putString("status", "모니터링 종료");
                         break;
                     case "모니터링 종료":
                         cameraSource.stop();
