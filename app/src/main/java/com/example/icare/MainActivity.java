@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences.Editor editor;
     private Matcher matcher;
     private EditText name, phone, email, age;
-    private Button man, girl, next;
+    private Button man, girl, next, nope;
     private boolean canNext = false;
     private String sex = "";
     private String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -54,10 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         man = (Button) findViewById(R.id.man);
         girl = (Button) findViewById(R.id.girl);
         next = (Button) findViewById(R.id.next);
+        nope = (Button) findViewById(R.id.nope);
 
         man.setOnClickListener(this);
         girl.setOnClickListener(this);
         next.setOnClickListener(this);
+        nope.setOnClickListener(this);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -155,7 +157,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
-
+            case R.id.nope:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+                editor.putBoolean("isFrist", true);
+                editor.commit();
+                break;
         }
     }
 

@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button finger, password, next;
+    private Button finger, password, next, regist;
     private EditText pwd, name, email;
     private CheckBox autoLogin;
     private Matcher matcher;
@@ -54,10 +54,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         pwd = (EditText) findViewById(R.id.pwd);
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
+        regist = (Button) findViewById(R.id.regist);
         autoLogin = (CheckBox) findViewById(R.id.autoLogin);
 
         finger.setOnClickListener(this);
         password.setOnClickListener(this);
+        regist.setOnClickListener(this);
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
         db = FirebaseFirestore.getInstance();
@@ -228,6 +230,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 name.setText("");
                 email.setText("");
                 pwd.setText("");
+                break;
+            case R.id.regist:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
                 break;
         }
     }
