@@ -72,7 +72,7 @@ public class PasswordActivity extends AppCompatActivity {
                 if (canNext) {
                     editor.putString("password",pwd.getText().toString());
                     editor.commit();
-                    startActivity(new Intent(getApplicationContext(), CompleteActivity.class));
+                    startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
                     finish();
                 }
             }

@@ -92,7 +92,7 @@ public class FingerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (canNext) {
-                    startActivity(new Intent(getApplicationContext(), CompleteActivity.class));
+                    startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
                     finish();
                 }
             }

@@ -21,9 +21,9 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
     private SharedPreferences mPref;
     private SharedPreferences.Editor editor;
     private Button prev;
-    private LinearLayout moniter, alram, brightness;
+    private LinearLayout moniter, brightness;
     private ConfigureActivity c = this;
-    private int moniterIdx, alramIdx, brightnessIdx;
+    private int moniterIdx, brightnessIdx;
 
 
     @Override
@@ -36,11 +36,9 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
 
         prev = (Button) findViewById(R.id.prev);
         moniter = (LinearLayout) findViewById(R.id.moniter);
-        alram = (LinearLayout) findViewById(R.id.alram);
         brightness = (LinearLayout) findViewById(R.id.brightness);
 
         moniterIdx = mPref.getInt("moniterIdx", 0);
-        alramIdx = mPref.getInt("alramIdx", 0);
         brightnessIdx = mPref.getInt("brightnessIdx", 0);
 
 
@@ -55,22 +53,6 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                         .setRequestCode(11)
                         .setChoiceMode(AbsListView.CHOICE_MODE_SINGLE)
                         .show();
-                return false;
-            }
-        });
-
-        alram.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ListDialogFragment
-                        .createBuilder(c, getSupportFragmentManager())
-                        .setTitle("모니터링 종류 선택")
-                        .setItems(new String[]{"밝기줄이기", "알림띄우기"})
-                        .setSelectedItem(alramIdx)
-                        .setRequestCode(12)
-                        .setChoiceMode(AbsListView.CHOICE_MODE_SINGLE)
-                        .show();
-
                 return false;
             }
         });
@@ -108,11 +90,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                 editor.putInt("moniterIdx", number);
                 editor.putString("moniter", value.toString());
                 break;
-            case 12:
-                alramIdx = number;
-                editor.putInt("alramIdx", number);
-                editor.putString("alram", value.toString());
-                break;
+
             case 13:
                 brightnessIdx = number;
                 editor.putInt("brightnessIdx", number);
