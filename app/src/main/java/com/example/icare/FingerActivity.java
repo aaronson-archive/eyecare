@@ -25,6 +25,7 @@ public class FingerActivity extends AppCompatActivity {
     TextView fingerText;
     Button start, next;
     boolean canNext = false;
+    private SharedPreferences.Editor editor;
     private SharedPreferences mPref;
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -34,6 +35,7 @@ public class FingerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finger);
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = mPref.edit();
 
         fingerText = (TextView) findViewById(R.id.finger_text);
         start = (Button) findViewById(R.id.start);
@@ -67,6 +69,11 @@ public class FingerActivity extends AppCompatActivity {
                 fingerText.setTextColor(Color.parseColor("#44c067"));
                 Toast.makeText(getApplicationContext(), "지문인식 성공", Toast.LENGTH_SHORT).show();
                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
+
+                editor = mPref.edit();
+                editor.putBoolean("isSecure", true);
+                editor.apply();
+
                 canNext = true;
             }
 
@@ -97,7 +104,7 @@ public class FingerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (canNext) {
-                    startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     mPref.edit().putBoolean("First", true).apply();
                 }

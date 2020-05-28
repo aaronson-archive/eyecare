@@ -51,7 +51,7 @@ public class PasswordActivity extends AppCompatActivity {
                 String repwdStr = repwd.getText().toString();
 
                 if (pwdStr.equals(repwdStr)) {
-                    if (pwdStr.length() >= 6) {
+                    if (pwdStr.length() >= 4) {
                         next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
                         canNext = true;
                     }
@@ -71,8 +71,9 @@ public class PasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (canNext) {
                     editor.putString("password", pwd.getText().toString());
+                    editor.putBoolean("isSecure", true);
                     editor.apply();
-                    startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 }
             }
