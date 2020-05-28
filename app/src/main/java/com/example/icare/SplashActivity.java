@@ -38,8 +38,13 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             boolean isAuto = mPref.getBoolean("autoLogin", false);
-            if (isAuto) {
+            boolean isFirst = mPref.getBoolean("First", false);
+            if(!isFirst) {
+                startActivity(new Intent(getApplicationContext(), SecureActivity.class));
+                finish();
+            }else if (isAuto) {
                 startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+                finish();
             } else if (!isFinishing()) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();

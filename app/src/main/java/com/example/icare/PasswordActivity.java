@@ -70,8 +70,8 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (canNext) {
-                    editor.putString("password",pwd.getText().toString());
-                    editor.commit();
+                    editor.putString("password", pwd.getText().toString());
+                    editor.apply();
                     startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
                     finish();
                 }

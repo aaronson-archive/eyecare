@@ -53,7 +53,7 @@ public class SecureActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.next :
                 editor.putString("authType",authType);
-                editor.commit();
+                editor.apply();
                 if (authType == "password") {
                     startActivity(new Intent(getApplicationContext(), PasswordActivity.class));
                     finish();

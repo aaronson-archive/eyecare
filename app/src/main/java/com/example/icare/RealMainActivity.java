@@ -106,7 +106,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                         Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
                         break;
                 }
-                editor.commit();
+                editor.apply();
                 break;
             case R.id.setting:
                 if (start.getText().toString() == "모니터링 종료")
@@ -114,7 +114,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(getApplicationContext(), ConfigureActivity.class));
                 finish();
                 editor.putString("status", "모니터링 시작");
-                editor.commit();
+                editor.apply();
                 break;
         }
     }
@@ -255,6 +255,6 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         super.onDestroy();
         editor.putString("status", "모니터링 시작");
         editor.putBoolean("alert", true);
-        editor.commit();
+        editor.apply();
     }
 }

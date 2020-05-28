@@ -1,5 +1,6 @@
 package com.example.icare;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -97,6 +98,6 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                 editor.putString("brightness", value.toString());
                 break;
         }
-        editor.commit();
+        editor.apply();
     }
 }

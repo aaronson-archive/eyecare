@@ -1,20 +1,22 @@
 package com.example.icare;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.concurrent.Executor;
 
@@ -23,6 +25,7 @@ public class FingerActivity extends AppCompatActivity {
     TextView fingerText;
     Button start, next;
     boolean canNext = false;
+    private SharedPreferences mPref;
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -30,12 +33,14 @@ public class FingerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finger);
 
-        fingerText = (TextView)findViewById(R.id.finger_text);
-        start = (Button)findViewById(R.id.start);
-        next = (Button)findViewById(R.id.next);
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        fingerText = (TextView) findViewById(R.id.finger_text);
+        start = (Button) findViewById(R.id.start);
+        next = (Button) findViewById(R.id.next);
 
         final BiometricManager biometricManager = BiometricManager.from(this);
-        switch (biometricManager.canAuthenticate()){
+        switch (biometricManager.canAuthenticate()) {
             case BiometricManager.BIOMETRIC_SUCCESS:
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
@@ -94,6 +99,7 @@ public class FingerActivity extends AppCompatActivity {
                 if (canNext) {
                     startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
                     finish();
+                    mPref.edit().putBoolean("First", true).apply();
                 }
             }
         });

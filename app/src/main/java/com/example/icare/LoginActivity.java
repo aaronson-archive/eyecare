@@ -162,7 +162,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             biometricPrompt.authenticate(promptInfo);
                             break;
                         case "password":
-                            db.collection("users").document(email.getText().toString()).get()
+
+                            /*db.collection("users").document(email.getText().toString()).get()
                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -184,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            });*/
                             break;
                     }
                 }
@@ -199,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (autoLogin.isChecked()) {
             editor.putBoolean("autoLogin", true);
-            editor.commit();
+            editor.apply();
         }
 
         startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
