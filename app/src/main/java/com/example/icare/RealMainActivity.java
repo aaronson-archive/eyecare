@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -187,54 +185,34 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
 
             String alram = mPref.getString("alram", "밝기줄이기");
             int moniter = Integer.parseInt(mPref.getString("moniter", "15cm").replaceAll("cm", "")) * 10;
-            final float brightness = Float.parseFloat("0." + mPref.getString("brightness", "50%").replace("%", ""));
+            final float brightness = Float.parseFloat("0." + mPref.getString("brightness", "0%").replace("%", ""));
 
             if (d < moniter) {
-                switch (alram) {
-                    case "밝기줄이기":
-                        if (params.screenBrightness != brightness) {
-                            RealMainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    params.screenBrightness = brightness;
-                                    getWindow().setAttributes(params);
-                                    Settings.System.putInt(getContentResolver(), "screen_brightness", (int) (brightness * 255));
-                                }
-                            });
+                if (params.screenBrightness != brightness) {
+                    RealMainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            params.screenBrightness = brightness;
+                            getWindow().setAttributes(params);
+                            Settings.System.putInt(getContentResolver(), "screen_brightness", (int) (brightness * 255));
                         }
-                        break;
-                    case "알림띄우기":
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "휴대전화와의 거리가 너무 가깝습니다.", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
+                    });
                 }
             }
             if (d >= moniter) {
-                if (alram.equals("밝기줄이기")) {
-                    try {
-                        if (Settings.System.getInt(getContentResolver(), "screen_brightness") < pBrightness) {
-                            RealMainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    params.screenBrightness = mBrightness;
-                                    getWindow().setAttributes(params);
-                                    android.provider.Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
-                                }
-                            });
-                        }
-                    } catch (Settings.SettingNotFoundException e) {
-                        e.printStackTrace();
+                try {
+                    if (Settings.System.getInt(getContentResolver(), "screen_brightness") < pBrightness) {
+                        RealMainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                params.screenBrightness = mBrightness;
+                                getWindow().setAttributes(params);
+                                android.provider.Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
+                            }
+                        });
                     }
+                } catch (Settings.SettingNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         }

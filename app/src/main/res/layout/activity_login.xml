@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,7 +36,8 @@
             android:textColor="#c8c8c8"
             android:layout_gravity="left"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="로그인 타입을 선택해주세요." />
+            android:text="Select the Login type
+" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -52,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:textColor="#fff"
+                android:textColorHint="#fff"
                 android:fontFamily="@font/spoqa_han_sans_bold"
-                android:text="지문인식" />
+                android:hint="지문인식\n(Fingerprint)" />
 
             <Button
                 android:background="@drawable/button"
@@ -63,9 +63,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#fff"
+                android:textColorHint="#fff"
                 android:fontFamily="@font/spoqa_han_sans_bold"
-                android:text="비밀번호" />
+                android:hint="비밀번호\n(Password)" />
 
         </LinearLayout>
 
@@ -91,8 +91,8 @@
             android:layout_marginTop="36dp"
             android:background="@drawable/button"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="다음"
-            android:textColor="#fff" />
+            android:hint="Next"
+            android:textColorHint="#fff" />
 
     </LinearLayout>
 

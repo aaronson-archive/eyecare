@@ -1,6 +1,8 @@
 package com.example.icare;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,6 +50,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
+        final AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this).setTitle("보안 인증")
+                .setMessage("보안 인증에 실패하였습니다.\n보안 설정을 새로 하시겠습니까?\nAuthentication failed!!\nWould you like to register a new secutiy setting?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getApplicationContext(), SecureActivity.class));
+                        finish();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).create();
 
         final BiometricManager biometricManager = BiometricManager.from(this);
         switch (biometricManager.canAuthenticate()) {
@@ -80,8 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
                 Toast.makeText(getApplicationContext(), "지문인식 실패", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), SecureActivity.class));
-                finish();
+                dialog.show();
             }
         });
 
@@ -118,27 +132,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                switch (authType) {
+                    case "finger":
+                        biometricPrompt.authenticate(promptInfo);
+                        break;
+                    case "password":
+                        // 로그인
+                        String DBPW = mPref.getString("password", "none");
 
-
-                    switch (authType) {
-                        case "finger":
-                            biometricPrompt.authenticate(promptInfo);
-                            break;
-                        case "password":
-                            // 로그인
-                            String DBPW = mPref.getString("password", "none");
-
-                            if (pwd.getText().toString().equals(DBPW)) {
-                                loginComplete();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "비밀번호가 맞지 않습니다.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), SecureActivity.class));
-                                finish();
-                            }
-                            Log.e("PW", DBPW);
-                            Log.e("RPW", pwd.getText().toString());
-                            break;
-                    }
+                        if (pwd.getText().toString().equals(DBPW)) {
+                            loginComplete();
+                        } else {
+                            dialog.show();
+                        }
+                        Log.e("PW", DBPW);
+                        Log.e("RPW", pwd.getText().toString());
+                        break;
+                }
 
             }
         });
@@ -147,7 +157,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void loginComplete() {
-
         startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
         finish();
     }

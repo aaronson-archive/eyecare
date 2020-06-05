@@ -2,84 +2,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="24dp">
+    android:layout_margin="24dp"
+    android:orientation="vertical">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="#444b54"
         android:fontFamily="@font/spoqa_han_sans_bold"
-        android:text="01" />
+        android:text="01"
+        android:textColor="#444b54"
+        android:textSize="24sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="#444b54"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/spoqa_han_sans_bold"
-        android:text="안녕하세요!\n설정을 진행하겠습니다." />
+        android:text="안녕하세요!\n설정을 진행하겠습니다."
+        android:textColor="#444b54"
+        android:textSize="24sp" />
 
     <TextView
-        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:layout_marginLeft="5dp"
-        android:textColor="#c8c8c8"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/spoqa_han_sans_bold"
-        android:text="보안 설정을 선택해주세." />
+        android:text="보안 설정을 선택해주세요.\n(Please select how to set security)"
+        android:textColor="#282828"
+        android:textSize="12sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:minHeight="40dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:orientation="horizontal">
 
         <Button
-            android:background="@drawable/button"
             android:id="@+id/finger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:textColor="#fff"
+            android:background="@drawable/button"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="지문인식" />
+            android:hint="지문인식\n(Fingerprint)"
+            android:textColor="#fff"
+            android:textColorHint="#FFFFFF" />
 
         <Button
-            android:background="@drawable/button"
             android:id="@+id/password"
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:textColor="#fff"
+            android:background="@drawable/button"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="비밀번호" />
+            android:hint="비밀번호\n(Password)"
+            android:textColor="#fff"
+            android:textColorHint="#FFFFFF" />
 
     </LinearLayout>
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:gravity="bottom"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="bottom">
 
         <Button
-        android:background="@drawable/button"
-        android:layout_marginTop="36dp"
-        android:id="@+id/next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:fontFamily="@font/spoqa_han_sans_bold"
-        android:text="다음" />
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:hint="Next"
+            android:textColorHint="#fff" />
 
     </RelativeLayout>
 

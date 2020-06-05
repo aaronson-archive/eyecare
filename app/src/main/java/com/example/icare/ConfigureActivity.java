@@ -37,10 +37,10 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
 
         prev = (Button) findViewById(R.id.prev);
         moniter = (LinearLayout) findViewById(R.id.moniter);
-        brightness = (LinearLayout) findViewById(R.id.brightness);
+       /* brightness = (LinearLayout) findViewById(R.id.brightness);*/
 
         moniterIdx = mPref.getInt("moniterIdx", 0);
-        brightnessIdx = mPref.getInt("brightnessIdx", 0);
+        /*brightnessIdx = mPref.getInt("brightnessIdx", 0);*/
 
 
         moniter.setOnTouchListener(new View.OnTouchListener() {
@@ -49,7 +49,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                 ListDialogFragment a = ListDialogFragment
                         .createBuilder(c, getSupportFragmentManager())
                         .setTitle("모니터링 거리지정")
-                        .setItems(new String[]{"15cm", "30cm", "45cm"})
+                        .setItems(new String[]{"15cm", "30cm"})
                         .setSelectedItem(moniterIdx)
                         .setRequestCode(11)
                         .setChoiceMode(AbsListView.CHOICE_MODE_SINGLE)
@@ -58,7 +58,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
             }
         });
 
-        brightness.setOnTouchListener(new View.OnTouchListener() {
+      /*  brightness.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ListDialogFragment
@@ -71,7 +71,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                         .show();
                 return false;
             }
-        });
+        });*/
 
 
         prev.setOnClickListener(new View.OnClickListener() {
@@ -92,11 +92,11 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                 editor.putString("moniter", value.toString());
                 break;
 
-            case 13:
+            /*case 13:
                 brightnessIdx = number;
                 editor.putInt("brightnessIdx", number);
                 editor.putString("brightness", value.toString());
-                break;
+                break;*/
         }
         editor.apply();
     }
