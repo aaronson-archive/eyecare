@@ -65,7 +65,7 @@ public class FingerActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                fingerText.setText("지문인식이 성공했습니다.");
+                fingerText.setText("지문 등록을 성공적으로 완료하였습니다.");
                 fingerText.setTextColor(Color.parseColor("#44c067"));
                 Toast.makeText(getApplicationContext(), "지문인식 성공", Toast.LENGTH_SHORT).show();
                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));

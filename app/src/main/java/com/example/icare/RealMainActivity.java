@@ -79,6 +79,10 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
                             Toast.makeText(this, "앱을 사용하기 위해 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
                         } else {
+                            Intent intent = new Intent(Intent.ACTION_MAIN); //태스크의 첫 액티비티로 시작
+                            intent.addCategory(Intent.CATEGORY_HOME);   //홈화면 표시
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 태스크를 생성하여 그 태스크안에서 액티비티 추가
+                            startActivity(intent);
                             Camera camera = frontCam();
                             Camera.Parameters campar = camera.getParameters();
                             F = campar.getFocalLength();
