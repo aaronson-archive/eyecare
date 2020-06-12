@@ -1,5 +1,11 @@
 package com.example.icare;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,28 +21,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
-import androidx.core.content.ContextCompat;
-
 import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button finger, password, next;
     private Matcher matcher;
+    private String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText pwd;
     private String authType = "";
     private SharedPreferences mPref;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_auth);
 
         finger = (Button) findViewById(R.id.finger);
         password = (Button) findViewById(R.id.password);
@@ -48,19 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        final AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this).setTitle("보안 인증")
-                .setMessage("보안 인증에 실패하였습니다.\n보안 설정을 새로 하시겠습니까?\nAuthentication failed!!\nWould you like to register a new secutiy setting?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), SecureActivity.class));
-                        finish();
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).create();
+        intent = new Intent();
 
         final BiometricManager biometricManager = BiometricManager.from(this);
         switch (biometricManager.canAuthenticate()) {
@@ -76,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Executor executor = ContextCompat.getMainExecutor(this);
 
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+        final BiometricPrompt biometricPrompt = new BiometricPrompt(AuthActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
@@ -93,7 +84,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
                 Toast.makeText(getApplicationContext(), "지문인식 실패", Toast.LENGTH_SHORT).show();
-                dialog.show();
+                intent.putExtra("authResult", "실패");
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -141,7 +134,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (pwd.getText().toString().equals(DBPW)) {
                             loginComplete();
                         } else {
-                            dialog.show();
+                            intent.putExtra("authResult", "실패");
+                            setResult(RESULT_OK, intent);
+                            finish();
                         }
                         Log.e("PW", DBPW);
                         Log.e("RPW", pwd.getText().toString());
@@ -155,7 +150,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void loginComplete() {
-        startActivity(new Intent(getApplicationContext(), RealMainActivity.class));
+        intent.putExtra("authResult", "성공");
+        setResult(RESULT_OK, intent);
         finish();
     }
 

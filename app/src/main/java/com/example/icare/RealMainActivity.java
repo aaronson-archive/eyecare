@@ -2,6 +2,7 @@ package com.example.icare;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -30,8 +33,8 @@ import java.io.IOException;
 
 public class RealMainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button setting, start;
-    Context context;
+    private Button setting, start;
+    private Context context;
     private SharedPreferences mPref;
     private SharedPreferences.Editor editor;
     private static int SPLASH_TIME_OUT = 4000;
@@ -83,6 +86,11 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                             intent.addCategory(Intent.CATEGORY_HOME);   //홈화면 표시
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 태스크를 생성하여 그 태스크안에서 액티비티 추가
                             startActivity(intent);
+
+                            if (cameraSource != null) {
+                                cameraSource.stop();
+                            }
+
                             Camera camera = frontCam();
                             Camera.Parameters campar = camera.getParameters();
                             F = campar.getFocalLength();
@@ -93,20 +101,32 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                             camera.stopPreview();
                             camera.release();
                             createCameraSource();
+
                             Toast.makeText(getApplicationContext(), "모니터링을 시작합니다.", Toast.LENGTH_SHORT).show();
                             start.setText(mPref.getString("stauts", "모니터링 종료"));
                             editor.putString("status", "모니터링 종료");
                         }
                         break;
                     case "모니터링 종료":
-                        cameraSource.stop();
-                        Toast.makeText(getApplicationContext(), "모니터링을 종료합니다.", Toast.LENGTH_SHORT).show();
-                        start.setText(mPref.getString("stauts", "모니터링 시작"));
-                        editor.putString("status", "모니터링 시작");
-                        params.screenBrightness = mBrightness;
-                        getWindow().setAttributes(params);
-                        Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
+                        AlertDialog alertDialog = new AlertDialog.Builder(RealMainActivity.this)
+                                .setTitle("본인 인증")
+                                .setMessage("모니터링 종료를 위해서는 본인 인증이 필요합니다.\n인증하시겠습니까?")
+                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startActivityForResult(new Intent(getApplicationContext(), AuthActivity.class), 1000);
+                                    }
+                                }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                }).create();
+
+                        alertDialog.show();
                         break;
+
                 }
                 editor.apply();
                 break;
@@ -147,9 +167,11 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                 .setTrackingEnabled(true)
                 .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
                 .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                .setMode(FaceDetector.FAST_MODE)
+                .setMode(FaceDetector.ACCURATE_MODE)
                 .build();
+
         detector.setProcessor(new LargestFaceFocusingProcessor(detector, new FaceTracker()));
+
 
         cameraSource = new CameraSource.Builder(this, detector)
                 .setRequestedPreviewSize(1024, 768)
@@ -162,6 +184,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                 return;
             }
             cameraSource.start();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,8 +210,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
             float d = F * (H / sensorX) * (768 / (2 * p));
             Log.e("Distance", String.format("%.0f", d));
 
-            String alram = mPref.getString("alram", "밝기줄이기");
-            int moniter = Integer.parseInt(mPref.getString("moniter", "15cm").replaceAll("cm", "")) * 10;
+            int moniter = Integer.parseInt(mPref.getString("moniter", "20cm").replaceAll("cm", "")) * 10;
             final float brightness = Float.parseFloat("0." + mPref.getString("brightness", "0%").replace("%", ""));
 
             if (d < moniter) {
@@ -238,5 +260,27 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         editor.putString("status", "모니터링 시작");
         editor.putBoolean("alert", true);
         editor.apply();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK && data != null) {
+            switch (data.getStringExtra("authResult")) {
+                case "성공":
+                    if (cameraSource != null)
+                        cameraSource.stop();
+                    Toast.makeText(getApplicationContext(), "모니터링을 종료합니다.", Toast.LENGTH_SHORT).show();
+                    start.setText(mPref.getString("stauts", "모니터링 시작"));
+                    editor.putString("status", "모니터링 시작");
+                    params.screenBrightness = mBrightness;
+                    getWindow().setAttributes(params);
+                    Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
+                    break;
+                case "실패":
+                    Toast.makeText(RealMainActivity.this, "인증에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
     }
 }
