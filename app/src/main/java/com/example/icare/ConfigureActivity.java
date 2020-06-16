@@ -48,7 +48,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
                 ListDialogFragment a = ListDialogFragment
                         .createBuilder(c, getSupportFragmentManager())
                         .setTitle("모니터링 거리지정")
-                        .setItems(new String[]{"20cm", "25cm", "30cm"})
+                        .setItems(new String[]{"20cm", "30cm", "40cm"})
                         .setSelectedItem(moniterIdx)
                         .setRequestCode(11)
                         .setChoiceMode(AbsListView.CHOICE_MODE_SINGLE)

@@ -65,7 +65,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         setting = (Button) findViewById(R.id.setting);
         start = (Button) findViewById(R.id.start);
 
-        start.setText(mPref.getString("status", "모니터링 시작"));
+        start.setText("모니터링 시작");
 
         setting.setOnClickListener(this);
         start.setOnClickListener(this);
