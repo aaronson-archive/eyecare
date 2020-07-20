@@ -70,7 +70,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_actvie"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="지문 인식하기(Register)"
+            android:text="지문 인식하기(Registration)"
             android:textColor="#fff" />
 
         <Button
