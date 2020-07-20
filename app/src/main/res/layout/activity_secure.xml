@@ -29,7 +29,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/spoqa_han_sans_bold"
-        android:text="보안 설정을 선택해주세요.\n(Please select how to set security)"
+        android:text="보안 설정을 선택해주세요.\n((Please select the Log-in type))"
         android:textColor="#282828"
         android:textSize="12sp" />
 
