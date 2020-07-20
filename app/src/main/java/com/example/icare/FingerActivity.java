@@ -46,7 +46,7 @@ public class FingerActivity extends AppCompatActivity {
             case BiometricManager.BIOMETRIC_SUCCESS:
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                fingerText.setText("지문인식 센서가 없습니다. 앱을 종료해주세요.");
+                fingerText.setText("지문인식 센서가 없습니다. 앱을 종료해주세요.\n(There is no fingerprint sensor. Please close the app.)");
                 fingerText.setTextColor(Color.parseColor("#c04444"));
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
@@ -65,9 +65,9 @@ public class FingerActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                fingerText.setText("지문 등록을 성공적으로 완료하였습니다.");
+                fingerText.setText("지문 등록을 성공적으로 완료하였습니다\n(You have successfully registered your fingerprint.)");
                 fingerText.setTextColor(Color.parseColor("#44c067"));
-                Toast.makeText(getApplicationContext(), "지문인식 성공", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "지문인식 성공\n(Fingerprint recognition success)", Toast.LENGTH_SHORT).show();
                 next.setBackground(getResources().getDrawable(R.drawable.button_actvie));
 
                 editor = mPref.edit();
@@ -80,17 +80,17 @@ public class FingerActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                fingerText.setText("지문이 정확하지 않습니다, 다시 한 번 해주세요.");
+                fingerText.setText("지문이 정확하지 않습니다, 다시 한 번 해주세요.\n(The fingerprint is not correct, please try again.)");
                 fingerText.setTextColor(Color.parseColor("#c04444"));
-                Toast.makeText(getApplicationContext(), "지문인식 실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "지문인식 실패\n(The fingerprint is not correct, please try again.)", Toast.LENGTH_SHORT).show();
                 canNext = false;
             }
         });
 
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("지문 인식")
-                .setDescription("사용자의 지문을 인식하여 등록합니다.")
-                .setNegativeButtonText("취소")
+                .setTitle("지문 인식(Fingerprint recognition)")
+                .setDescription("사용자의 지문을 인식하여 등록합니다.\nRecognize the user's fingerprint.")
+                .setNegativeButtonText("취소(Cancel)")
                 .build();
 
         start.setOnClickListener(new View.OnClickListener() {
