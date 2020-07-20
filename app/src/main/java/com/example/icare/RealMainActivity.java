@@ -131,7 +131,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                 editor.apply();
                 break;
             case R.id.setting:
-                if (start.getText().toString() == "모니터링 종료")
+                if (start.getText().toString() == "모니터링 종료(Stop)")
                     cameraSource.stop();
                 startActivity(new Intent(getApplicationContext(), ConfigureActivity.class));
                 finish();
