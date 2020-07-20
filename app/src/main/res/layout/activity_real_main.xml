@@ -16,6 +16,15 @@
         android:text="버튼을 눌러주세요,\n모니터링을 시작합니다." />
 
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="핸드폰의 자동밝기를 off 로 해두시면\n보다 확실한 암전효과를 보실 수 있습니다.\nIf you turn off the cell phone's automatic brightness, You'll get a more definite black-field effect."
+        android:textColor="#ff6f61"
+        android:textSize="12sp" />
+
     <LinearLayout
         android:layout_marginTop="32dp"
         android:layout_width="match_parent"
@@ -24,10 +33,10 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="41dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="13.5dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/plz" />
 
         <TextView
@@ -36,8 +45,9 @@
             android:layout_height="wrap_content"
             android:textColor="#444b54"
             android:layout_weight="5"
-            android:layout_margin="13.5dp"
-            android:text="앱을 완전히 종료하지 않으면\n계속 모니터링이 진행됩니다." />
+            android:layout_margin="10.5dp"
+            android:text="앱을 완전히 종료하지 않으면\n계속 모니터링이 진행됩니다.\nThe screen brightness decreases automatically when it is closer than the set distance." />
+
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +57,7 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:layout_margin="13.5dp"
             android:layout_weight="1"
@@ -59,8 +69,9 @@
             android:layout_height="wrap_content"
             android:textColor="#444b54"
             android:layout_weight="2"
-            android:layout_margin="13.5dp"
-            android:text="설정된 거리에서 가까워지면\n자동으로 화면 밝기가 감소됩니다." />
+            android:layout_margin="10.5dp"
+            android:text="설정된 거리에서 가까워지면\n자동으로 화면 밝기가 감소됩니다.\nIn order to end monitoring,
+You must press the Monitoring Stop button." />
 
     </LinearLayout>
 
@@ -72,6 +83,15 @@
             android:gravity="bottom"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="Start 버튼을 누르면 모니터링 실행 후 앱은 종료됩니다.\nIf you press the Start button, Runs monitoring and then exits"
+                android:textColor="#444b54"
+                android:textSize="12sp" />
+
             <Button
                 android:id="@+id/start"
                 android:layout_width="match_parent"
@@ -79,7 +99,7 @@
                 android:layout_marginTop="36dp"
                 android:background="@drawable/button_actvie"
                 android:fontFamily="@font/spoqa_han_sans_bold"
-                android:text="모니터링 시작"
+                android:text="모니터링 시작(Start)"
                 android:textColor="#fff" />
 
             <Button
@@ -89,8 +109,9 @@
                 android:layout_marginTop="36dp"
                 android:background="@drawable/button_actvie"
                 android:fontFamily="@font/spoqa_han_sans_bold"
-                android:text="환경설정"
+                android:text="환경설정(Setup)"
                 android:textColor="#fff" />
+
         </LinearLayout>
 
 
