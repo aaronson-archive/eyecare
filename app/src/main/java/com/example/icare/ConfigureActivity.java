@@ -47,7 +47,7 @@ public class ConfigureActivity extends AppCompatActivity implements IListDialogL
             public boolean onTouch(View v, MotionEvent event) {
                 ListDialogFragment a = ListDialogFragment
                         .createBuilder(c, getSupportFragmentManager())
-                        .setTitle("모니터링 거리지정")
+                        .setTitle("모니터링 거리지정\n(Monitoring Distance)")
                         .setItems(new String[]{"20cm", "30cm", "40cm"})
                         .setSelectedItem(moniterIdx)
                         .setRequestCode(11)
