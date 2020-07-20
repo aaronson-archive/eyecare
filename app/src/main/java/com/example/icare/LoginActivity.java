@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         final AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this).setTitle("보안 인증")
-                .setMessage("보안 인증에 실패하였습니다.\n보안 설정을 새로 하시겠습니까?\nAuthentication failed!!\nWould you like to register a new secutiy setting?")
+                .setMessage("보안 인증에 실패하였습니다.\n보안 설정을 새로 하시겠습니까?\nDo you want to proceed with new security registration?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
