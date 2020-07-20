@@ -34,8 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqa_han_sans_regular"
-            android:text="아이케어 프로그램은 우리 아이들의 소중한 시력을\n
-해드폰 화면으로부터 보호하기 위해 개발 되었습니다" />
+            android:text="아이케어 프로그램은 우리 아이들의 소중한 시력을\n핸드폰 화면으로부터 보호하기 위해 개발 되었습니다" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,8 +49,9 @@ our children's precious eyesight from cell phone screens.
         android:id="@+id/btn_next"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:hint="Next"
+        android:background="#444b54"
         android:fontFamily="@font/spoqa_han_sans_bold"
+        android:hint="Next"
         android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
