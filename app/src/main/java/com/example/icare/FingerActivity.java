@@ -88,9 +88,9 @@ public class FingerActivity extends AppCompatActivity {
         });
 
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("지문 인식(Fingerprint recognition)")
-                .setDescription("사용자의 지문을 인식하여 등록합니다.\nRecognize the user's fingerprint.")
-                .setNegativeButtonText("취소(Cancel)")
+                .setTitle("지문 인식\n(Fingerprint recognition)")
+                .setDescription("Please touch the fingerprint sensor")
+                .setNegativeButtonText("Cancel")
                 .build();
 
         start.setOnClickListener(new View.OnClickListener() {
