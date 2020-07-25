@@ -65,7 +65,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         setting = (Button) findViewById(R.id.setting);
         start = (Button) findViewById(R.id.start);
 
-        start.setText("모니터링 시작");
+        start.setText("START");
 
         setting.setOnClickListener(this);
         start.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.start:
                 switch (start.getText().toString()) {
-                    case "모니터링 시작":
+                    case "START":
                         context = getApplicationContext();
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
@@ -103,14 +103,14 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                             createCameraSource();
 
                             Toast.makeText(getApplicationContext(), "모니터링을 시작합니다.", Toast.LENGTH_SHORT).show();
-                            start.setText(mPref.getString("stauts", "모니터링 종료"));
-                            editor.putString("status", "모니터링 종료");
+                            start.setText(mPref.getString("stauts", "STOP"));
+                            editor.putString("status", "STOP");
                         }
                         break;
-                    case "모니터링 종료":
+                    case "STOP":
                         AlertDialog alertDialog = new AlertDialog.Builder(RealMainActivity.this)
                                 .setTitle("본인 인증")
-                                .setMessage("모니터링 종료를 위해서는 본인 인증이 필요합니다.\n인증하시겠습니까?")
+                                .setMessage("모니터링 종료를 위해서는 본인 인증이 필요합니다.\n인증하시겠습니까?\nIdentity verification for an end to monitoring is required.\nDo you want to approve?")
                                 .setPositiveButton("네", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -131,11 +131,11 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                 editor.apply();
                 break;
             case R.id.setting:
-                if (start.getText().toString() == "모니터링 종료(Stop)")
+                if (start.getText().toString() == "Stop")
                     cameraSource.stop();
                 startActivity(new Intent(getApplicationContext(), ConfigureActivity.class));
                 finish();
-                editor.putString("status", "모니터링 시작");
+                editor.putString("status", "START");
                 editor.apply();
                 break;
         }
@@ -257,7 +257,7 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        editor.putString("status", "모니터링 시작");
+        editor.putString("status", "START");
         editor.putBoolean("alert", true);
         editor.apply();
     }
@@ -271,8 +271,8 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                     if (cameraSource != null)
                         cameraSource.stop();
                     Toast.makeText(getApplicationContext(), "모니터링을 종료합니다.", Toast.LENGTH_SHORT).show();
-                    start.setText(mPref.getString("stauts", "모니터링 시작"));
-                    editor.putString("status", "모니터링 시작");
+                    start.setText(mPref.getString("stauts", "START"));
+                    editor.putString("status", "START");
                     params.screenBrightness = mBrightness;
                     getWindow().setAttributes(params);
                     Settings.System.putInt(getContentResolver(), "screen_brightness", pBrightness);
