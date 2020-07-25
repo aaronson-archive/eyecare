@@ -83,7 +83,7 @@
             android:layout_marginTop="36dp"
             android:background="@drawable/button_actvie"
             android:fontFamily="@font/spoqa_han_sans_bold"
-            android:text="돌아가기(Return)"
+            android:text="Return"
             android:textColor="#fff" />
 
     </RelativeLayout>
