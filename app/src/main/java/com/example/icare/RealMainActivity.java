@@ -111,12 +111,12 @@ public class RealMainActivity extends AppCompatActivity implements View.OnClickL
                         AlertDialog alertDialog = new AlertDialog.Builder(RealMainActivity.this)
                                 .setTitle("본인 인증")
                                 .setMessage("모니터링 종료를 위해서는 본인 인증이 필요합니다.\n인증하시겠습니까?\nIdentity verification for an end to monitoring is required.\nDo you want to approve?")
-                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         startActivityForResult(new Intent(getApplicationContext(), AuthActivity.class), 1000);
                                     }
-                                }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
