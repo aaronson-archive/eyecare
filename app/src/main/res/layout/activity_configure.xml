@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqa_han_sans_regular"
-            android:text="모니터링 거리 지정"
+            android:text="모니터링 거리 설정"
             android:textColor="#de000000"
             android:textSize="16sp" />
 
